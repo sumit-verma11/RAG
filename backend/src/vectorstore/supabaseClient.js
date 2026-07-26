@@ -1,4 +1,11 @@
 import { createClient } from '@supabase/supabase-js';
 import { config } from '../config.js';
 
-export const supabase = createClient(config.supabaseUrl, config.supabaseServiceKey);
+let client;
+
+export function getSupabaseClient() {
+  if (!client) {
+    client = createClient(config.supabaseUrl, config.supabaseServiceKey);
+  }
+  return client;
+}
