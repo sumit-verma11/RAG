@@ -11,8 +11,8 @@ export const ingestLimiter = rateLimit({
 });
 
 export const queryLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  limit: 30,
+  windowMs: 60 * 1000,
+  limit: 100,
   standardHeaders: true,
   legacyHeaders: false,
   message: { error: 'Too many questions. Please try again later.' },
