@@ -1,7 +1,7 @@
 .upload-dropzone {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: flex-start;
   gap: 16px;
   flex-wrap: wrap;
   border: 1px dashed var(--color-border);
@@ -13,43 +13,10 @@
   font-size: 15px;
   font-weight: 500;
   color: var(--color-text);
+  margin-bottom: 8px;
 }
 
 .upload-input {
   font-family: var(--font-sans);
   font-size: 14px;
-}
-
-.upload-status {
-  margin: 12px 0 0;
-  font-size: 14px;
-  padding-left: 10px;
-  border-left: 3px solid transparent;
-}
-
-.upload-status-loading {
-  color: var(--color-accent);
-  border-left-color: var(--color-accent);
-}
-
-.upload-status-loading::before {
-  content: '⏳ ';
-}
-
-.upload-status-error {
-  color: var(--color-error);
-  border-left-color: var(--color-error);
-}
-
-.upload-status-error::before {
-  content: '⚠ ';
-}
-
-.upload-status-done {
-  color: var(--color-success);
-  border-left-color: var(--color-success);
-}
-
-.upload-status-done::before {
-  content: '✓ ';
 }

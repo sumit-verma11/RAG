@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { sendQuery } from '../api/client';
 import { MessageList } from './MessageList';
 import './ChatPanel.css';
@@ -8,6 +8,11 @@ export function ChatPanel() {
   const [input, setInput] = useState('');
   const [status, setStatus] = useState('idle');
   const [error, setError] = useState(null);
+  const messagesEndRef = useRef(null);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView?.({ block: 'end' });
+  }, [messages]);
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -37,12 +42,13 @@ export function ChatPanel() {
         ) : (
           <MessageList messages={messages} />
         )}
+        <div ref={messagesEndRef} />
       </div>
       {status === 'loading' && (
-        <p role="status" className="chat-status chat-status-loading">Thinking...</p>
+        <p role="status" className="status status-loading">Thinking...</p>
       )}
       {status === 'error' && (
-        <p role="alert" className="chat-status chat-status-error">{error}</p>
+        <p role="alert" className="status status-error">{error}</p>
       )}
       <form className="chat-form" onSubmit={handleSubmit}>
         <input

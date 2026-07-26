@@ -36,13 +36,13 @@ export function UploadPanel({ onUploaded }) {
         />
       </div>
       {status === 'loading' && (
-        <p role="status" className="upload-status upload-status-loading">Uploading and indexing...</p>
+        <p role="status" className="status status-loading">Uploading and indexing...</p>
       )}
       {status === 'error' && (
-        <p role="alert" className="upload-status upload-status-error">{error}</p>
+        <p role="alert" className="status status-error">{error}</p>
       )}
       {status === 'done' && (
-        <p role="status" className="upload-status upload-status-done">Document indexed.</p>
+        <p role="status" className="status status-done">Document indexed.</p>
       )}
     </div>
   );
