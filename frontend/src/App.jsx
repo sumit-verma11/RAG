@@ -1,3 +1,4 @@
+import './App.css';
 import { UploadPanel } from './components/UploadPanel';
 import { ChatPanel } from './components/ChatPanel';
 
