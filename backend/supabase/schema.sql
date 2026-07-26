@@ -9,8 +9,14 @@ create table if not exists documents (
   created_at timestamptz not null default now()
 );
 
-create index if not exists documents_embedding_idx
-  on documents using ivfflat (embedding vector_cosine_ops) with (lists = 100);
+-- No ANN index (ivfflat/hnsw) here on purpose: ivfflat is an approximate
+-- index that clusters rows into `lists` buckets and only probes 1 by
+-- default. With a small personal document set (far fewer rows than
+-- `lists`), a matching row can land in a bucket the query never probes,
+-- so the search silently returns nothing instead of erroring. A plain
+-- sequential scan (no index) gives exact results and is plenty fast at
+-- this scale. Add an ivfflat/hnsw index only once the table has grown
+-- into the thousands of rows.
 
 create or replace function match_documents(
   query_embedding vector(768),

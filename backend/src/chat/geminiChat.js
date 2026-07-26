@@ -2,7 +2,10 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { config } from '../config.js';
 
 const genAI = new GoogleGenerativeAI(config.geminiApiKey);
-const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+// gemini-1.5-flash was retired; "-latest" alias tracks whatever the
+// current stable flash model is instead of pinning a version that will
+// eventually be deprecated the same way.
+const model = genAI.getGenerativeModel({ model: 'gemini-flash-latest' });
 
 export function buildGroundedPrompt(question, chunks) {
   const context = chunks

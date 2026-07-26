@@ -1,0 +1,28 @@
+.bg-art {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.bg-art-ring {
+  fill: none;
+  stroke: rgba(129, 140, 248, 0.35);
+  stroke-width: 1.5;
+}
+
+.bg-art-ring-alt {
+  stroke: rgba(56, 189, 248, 0.32);
+}
+
+.bg-art-line {
+  stroke: rgba(129, 140, 248, 0.22);
+  stroke-width: 1;
+  stroke-dasharray: 4 6;
+}
+
+.bg-art-dot {
+  fill: rgba(165, 180, 252, 0.55);
+}

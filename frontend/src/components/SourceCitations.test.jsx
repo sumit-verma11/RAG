@@ -11,6 +11,6 @@ describe('SourceCitations', () => {
   it('renders a numbered entry per source', () => {
     render(<SourceCitations sources={[{ filename: 'geo.txt', chunkIndex: 0, similarity: 0.87 }]} />);
     expect(screen.getByText(/geo\.txt/)).toBeInTheDocument();
-    expect(screen.getByText(/0\.87/)).toBeInTheDocument();
+    expect(screen.getByText(/87% match/)).toBeInTheDocument();
   });
 });

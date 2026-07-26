@@ -5,7 +5,7 @@ export function SourceCitations({ sources }) {
     <ul className="source-citations">
       {sources.map((s, i) => (
         <li key={`${s.filename}-${s.chunkIndex}`}>
-          [{i + 1}] {s.filename} (chunk {s.chunkIndex}, similarity {s.similarity.toFixed(2)})
+          [{i + 1}] {s.filename} · {Math.round(s.similarity * 100)}% match
         </li>
       ))}
     </ul>

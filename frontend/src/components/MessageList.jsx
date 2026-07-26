@@ -1,3 +1,4 @@
+import { MarkdownLite } from './MarkdownLite';
 import { SourceCitations } from './SourceCitations';
 
 export function MessageList({ messages }) {
@@ -5,7 +6,7 @@ export function MessageList({ messages }) {
     <ul className="message-list">
       {messages.map((m, i) => (
         <li key={i} className={`message message-${m.role}`}>
-          <p>{m.content}</p>
+          {m.role === 'assistant' ? <MarkdownLite text={m.content} /> : <p>{m.content}</p>}
           {m.role === 'assistant' && <SourceCitations sources={m.sources} />}
         </li>
       ))}

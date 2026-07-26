@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { sendQuery } from '../api/client';
 import { MessageList } from './MessageList';
+import { IconSparkle, IconSend, IconSpinner, IconAlertTriangle } from './icons';
 import './ChatPanel.css';
 
 export function ChatPanel() {
@@ -36,19 +37,32 @@ export function ChatPanel() {
 
   return (
     <div className="chat-panel card">
+      <div className="card-header">
+        <IconSparkle width={18} height={18} />
+        <p className="card-title">Ask a question</p>
+      </div>
       <div className="chat-messages">
         {messages.length === 0 ? (
-          <p className="chat-empty">Ask a question about your uploaded documents</p>
+          <div className="chat-empty">
+            <IconSparkle className="chat-empty-icon" width={22} height={22} />
+            <p>Ask a question about your uploaded documents</p>
+          </div>
         ) : (
           <MessageList messages={messages} />
         )}
         <div ref={messagesEndRef} />
       </div>
       {status === 'loading' && (
-        <p role="status" className="status status-loading">Thinking...</p>
+        <p role="status" className="status status-loading">
+          <IconSpinner />
+          <span>Thinking...</span>
+        </p>
       )}
       {status === 'error' && (
-        <p role="alert" className="status status-error">{error}</p>
+        <p role="alert" className="status status-error">
+          <IconAlertTriangle />
+          <span>{error}</span>
+        </p>
       )}
       <form className="chat-form" onSubmit={handleSubmit}>
         <input
@@ -58,7 +72,10 @@ export function ChatPanel() {
           disabled={status === 'loading'}
           className="chat-input"
         />
-        <button type="submit" disabled={status === 'loading'} className="chat-send">Send</button>
+        <button type="submit" disabled={status === 'loading'} className="chat-send">
+          <IconSend />
+          <span>Send</span>
+        </button>
       </form>
     </div>
   );

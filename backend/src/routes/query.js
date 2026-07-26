@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { embedTexts } from '../embeddings/geminiEmbeddings.js';
 import { matchDocuments } from '../vectorstore/documentsStore.js';
 import { generateAnswer } from '../chat/geminiChat.js';
+import { filterCitedSources } from '../chat/citations.js';
 
 export const queryRouter = Router();
 
@@ -20,12 +21,8 @@ queryRouter.post('/api/query', async (req, res, next) => {
       return res.json({ answer: "I don't know based on the provided documents.", sources: [] });
     }
 
-    const answer = await generateAnswer(question, chunks);
-    const sources = chunks.map((c) => ({
-      filename: c.source_filename,
-      chunkIndex: c.chunk_index,
-      similarity: c.similarity,
-    }));
+    const rawAnswer = await generateAnswer(question, chunks);
+    const { answer, sources } = filterCitedSources(rawAnswer, chunks);
 
     res.json({ answer, sources });
   } catch (err) {

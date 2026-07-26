@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { uploadDocument } from '../api/client';
+import { IconUploadCloud, IconSpinner, IconCheckCircle, IconAlertTriangle } from './icons';
 import './UploadPanel.css';
 
 export function UploadPanel({ onUploaded }) {
@@ -26,7 +27,9 @@ export function UploadPanel({ onUploaded }) {
   return (
     <div className="upload-panel card">
       <div className="upload-dropzone">
+        <IconUploadCloud className="upload-dropzone-icon" />
         <label htmlFor="file-upload" className="upload-label">Upload a document</label>
+        <span className="upload-hint">.txt, .md, .docx, or .pdf</span>
         <input
           id="file-upload"
           type="file"
@@ -36,13 +39,22 @@ export function UploadPanel({ onUploaded }) {
         />
       </div>
       {status === 'loading' && (
-        <p role="status" className="status status-loading">Uploading and indexing...</p>
+        <p role="status" className="status status-loading">
+          <IconSpinner />
+          <span>Uploading and indexing...</span>
+        </p>
       )}
       {status === 'error' && (
-        <p role="alert" className="status status-error">{error}</p>
+        <p role="alert" className="status status-error">
+          <IconAlertTriangle />
+          <span>{error}</span>
+        </p>
       )}
       {status === 'done' && (
-        <p role="status" className="status status-done">Document indexed.</p>
+        <p role="status" className="status status-done">
+          <IconCheckCircle />
+          <span>Document indexed.</span>
+        </p>
       )}
     </div>
   );
