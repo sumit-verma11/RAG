@@ -50,14 +50,33 @@ describe('POST /api/ingest', () => {
     expect(res.status).toBe(422);
   });
 
-  it('returns 500 when extraction throws', async () => {
-    extractText.mockRejectedValue(new Error('bad file'));
+  it('returns 500 with a generic message when extraction throws', async () => {
+    extractText.mockRejectedValue(new Error('some internal detail that should not leak'));
 
     const res = await request(app)
       .post('/api/ingest')
       .attach('file', Buffer.from('x'), 'broken.txt');
 
     expect(res.status).toBe(500);
-    expect(res.body).toEqual({ error: 'bad file' });
+    expect(res.body).toEqual({ error: 'Internal server error' });
+  });
+
+  it('returns 400 for an unsupported file extension', async () => {
+    const res = await request(app)
+      .post('/api/ingest')
+      .attach('file', Buffer.from('x'), 'malware.exe');
+
+    expect(res.status).toBe(400);
+    expect(res.body.error).toMatch(/unsupported file type/i);
+  });
+
+  it('returns 413 when the file exceeds the size limit', async () => {
+    const oversized = Buffer.alloc(15 * 1024 * 1024 + 1);
+
+    const res = await request(app)
+      .post('/api/ingest')
+      .attach('file', oversized, 'big.txt');
+
+    expect(res.status).toBe(413);
   });
 });

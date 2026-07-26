@@ -46,4 +46,22 @@ describe('POST /api/query', () => {
     expect(res.body).toEqual({ answer: "I don't know based on the provided documents.", sources: [] });
     expect(generateAnswer).not.toHaveBeenCalled();
   });
+
+  it('clamps an out-of-range k to the maximum instead of passing it straight through', async () => {
+    embedTexts.mockResolvedValue([[0.1]]);
+    matchDocuments.mockResolvedValue([]);
+
+    await request(app).post('/api/query').send({ question: 'anything?', k: 999999 });
+
+    expect(matchDocuments).toHaveBeenCalledWith([0.1], 20);
+  });
+
+  it('falls back to the default k for a non-numeric or negative value', async () => {
+    embedTexts.mockResolvedValue([[0.1]]);
+    matchDocuments.mockResolvedValue([]);
+
+    await request(app).post('/api/query').send({ question: 'anything?', k: -5 });
+
+    expect(matchDocuments).toHaveBeenCalledWith([0.1], 5);
+  });
 });
