@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { uploadDocument } from '../api/client';
+import './UploadPanel.css';
 
 export function UploadPanel({ onUploaded }) {
   const [status, setStatus] = useState('idle');
@@ -23,12 +24,26 @@ export function UploadPanel({ onUploaded }) {
   }
 
   return (
-    <div className="upload-panel">
-      <label htmlFor="file-upload">Upload a document</label>
-      <input id="file-upload" type="file" onChange={handleChange} disabled={status === 'loading'} />
-      {status === 'loading' && <p role="status">Uploading and indexing...</p>}
-      {status === 'error' && <p role="alert">{error}</p>}
-      {status === 'done' && <p role="status">Document indexed.</p>}
+    <div className="upload-panel card">
+      <div className="upload-dropzone">
+        <label htmlFor="file-upload" className="upload-label">Upload a document</label>
+        <input
+          id="file-upload"
+          type="file"
+          onChange={handleChange}
+          disabled={status === 'loading'}
+          className="upload-input"
+        />
+      </div>
+      {status === 'loading' && (
+        <p role="status" className="upload-status upload-status-loading">Uploading and indexing...</p>
+      )}
+      {status === 'error' && (
+        <p role="alert" className="upload-status upload-status-error">{error}</p>
+      )}
+      {status === 'done' && (
+        <p role="status" className="upload-status upload-status-done">Document indexed.</p>
+      )}
     </div>
   );
 }
