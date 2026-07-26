@@ -98,6 +98,40 @@
   border-bottom-left-radius: 4px;
 }
 
+.sources-toggle {
+  margin-top: 8px;
+}
+
+.sources-toggle summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-accent-hover);
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+.sources-toggle summary::-webkit-details-marker {
+  display: none;
+}
+
+.sources-toggle summary::before {
+  content: '▸';
+  font-size: 10px;
+  transition: transform 0.15s ease;
+}
+
+.sources-toggle[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.sources-toggle summary:hover {
+  text-decoration: underline;
+}
+
 @keyframes rise {
   from {
     opacity: 0;
