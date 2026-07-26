@@ -19,4 +19,12 @@ describe('chunkText', () => {
     expect(chunks[0].content.split(' ').slice(-10)).toEqual(chunks[1].content.split(' ').slice(0, 10));
     expect(chunks[2].content.split(' ').at(-1)).toBe('w119');
   });
+
+  it('throws an error when overlap >= chunkSize', () => {
+    expect(() => chunkText('some words', { chunkSize: 10, overlap: 10 })).toThrow('overlap must be smaller than chunkSize');
+  });
+
+  it('throws an error when overlap > chunkSize', () => {
+    expect(() => chunkText('some words', { chunkSize: 50, overlap: 100 })).toThrow('overlap must be smaller than chunkSize');
+  });
 });

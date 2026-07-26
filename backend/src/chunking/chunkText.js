@@ -1,4 +1,7 @@
 export function chunkText(text, { chunkSize = 500, overlap = 50 } = {}) {
+  if (overlap >= chunkSize) {
+    throw new Error('overlap must be smaller than chunkSize');
+  }
   const words = text.split(/\s+/).filter(Boolean);
   if (words.length === 0) return [];
 
